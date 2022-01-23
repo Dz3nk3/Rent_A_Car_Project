@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Rent_A_Car.MobileAPP.ViewModels"
+             xmlns:converters="clr-namespace:Rent_A_Car.MobileAPP.Converters"
+             xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
+             mc:Ignorable="d"
+             x:Class="Rent_A_Car.MobileAPP.Views.ItemsPage"
+             Title="{Binding Title}"
+             x:Name="BrowseItemsPage">
+
+
+    <ContentPage.BindingContext>
+        <vm:SearchVozilaViewModel></vm:SearchVozilaViewModel>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ImageConverter x:Key="imgConv"></converters:ImageConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
+
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout BackgroundColor="#ca223e">
+                <Label Text="Dobrodošli"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" 
+                FontAttributes="Bold" TextColor="White"
+                FontSize="Title"/>
+
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" VerticalOptions="Fill">
+                <Button HorizontalOptions="FillAndExpand" Font="Bold,17" BackgroundColor="#ca223e" TextColor="White" Text="{Binding ButtonTextPreporuceno}" Clicked="Button_Clicked"></Button>
+            </StackLayout>
+            
+            
+            <SearchBar TextColor="#aa0300" PlaceholderColor="#aa0300"
+                           Placeholder="Pretražite..."
+                       Text="{Binding SearchTerm}"
+                       SearchCommand="{Binding SearchTerm}"
+                       IsVisible="{Binding SearchVisible}"
+            ></SearchBar>
+
+
+            <StackLayout>
+                <ListView ItemsSource="{Binding VoziloList}" ItemSelected="ListView_ItemSelected" IsPullToRefreshEnabled="True" IsVisible="{Binding SearchVisible}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout>
+                                
+                                    <StackLayout Padding="10" Orientation="Horizontal" HorizontalOptions="Start">
+                                        <StackLayout>
+                                            <controls:CircleImage WidthRequest="150" HeightRequest="150"  Source="{Binding SlikaThumb, Converter={StaticResource imgConv}}"></controls:CircleImage>
+                                        </StackLayout>
+                                        
+                                        <!--//-->
+                                        <StackLayout Orientation="Vertical" HorizontalOptions="End">
+                                            <StackLayout>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Label Grid.Column="0" Text="Cijena po satu:"  FontSize="15" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                                                    <Label Grid.Column="1" TextColor="#aa0300" Text="{Binding CijenaPoSatu}" LineBreakMode="NoWrap" HorizontalTextAlignment="Start"
+                                                      Style="{DynamicResource ListItemDetailTextStyle}" FontSize="14"/>
+                                                    <Label Grid.Column="2" Text="KM"  FontSize="14" HorizontalTextAlignment="Start"/>
+                                                </Grid>
+                                            </StackLayout>
+
+                                            <StackLayout>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Label Grid.Column="0" Text="Model:"  FontSize="15" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                                                    <Label Grid.Column="1" TextColor="#aa0300" Text="{Binding Model}" LineBreakMode="NoWrap" HorizontalTextAlignment="Start"
+                                                      Style="{DynamicResource ListItemDetailTextStyle}" FontSize="14"/>
+                                                </Grid>
+                                            </StackLayout>
+                                            <StackLayout>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Label Grid.Column="0" Text="Marka:"  FontSize="15" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                                                    <Label Grid.Column="1" TextColor="#aa0300" Text="{Binding Marka}" LineBreakMode="NoWrap" HorizontalTextAlignment="Start"
+                                                      Style="{DynamicResource ListItemDetailTextStyle}" FontSize="14"/>
+                                                </Grid>
+                                            </StackLayout>
+
+                                        </StackLayout>
+                                        <!--//-->
+                                    </StackLayout>
+                                    <BoxView HeightRequest="5" BackgroundColor="#ca223e" HorizontalOptions="FillAndExpand" />
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+
+            <StackLayout>
+                <ListView ItemsSource="{Binding RecommendedVoziloList}" ItemSelected="ListView_ItemSelected" IsPullToRefreshEnabled="True"   IsVisible="{Binding RecommendedVisible}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout BackgroundColor="{Binding Color}">
+                            
+
+                                    <StackLayout Padding="10" Orientation="Horizontal">
+                                        <StackLayout>
+                                            <controls:CircleImage WidthRequest="150" HeightRequest="150"  Source="{Binding SlikaThumb, Converter={StaticResource imgConv}}"></controls:CircleImage>
+                                        </StackLayout>
+
+                                        <StackLayout Orientation="Vertical" HorizontalOptions="End">
+                                            <StackLayout>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Label Grid.Column="0" Text="Cijena po satu:"  FontSize="15" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                                                    <Label Grid.Column="1" TextColor="#aa0300" Text="{Binding CijenaPoSatu}" LineBreakMode="NoWrap" HorizontalTextAlignment="Start"
+                                                      Style="{DynamicResource ListItemDetailTextStyle}" FontSize="14"/>
+                                                    <Label Grid.Column="2" Text="KM"  FontSize="14" HorizontalTextAlignment="Start"/>
+                                                </Grid>
+                                            </StackLayout>
+
+                                            <StackLayout>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Label Grid.Column="0" Text="Model:"  FontSize="15" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                                                    <Label Grid.Column="1" TextColor="#aa0300" Text="{Binding Model}" LineBreakMode="NoWrap" HorizontalTextAlignment="Start"
+                                                      Style="{DynamicResource ListItemDetailTextStyle}" FontSize="14"/>
+                                                </Grid>
+                                            </StackLayout>
+                                            <StackLayout>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Label Grid.Column="0" Text="Marka:"  FontSize="15" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                                                    <Label Grid.Column="1" TextColor="#aa0300" Text="{Binding Marka}" LineBreakMode="NoWrap" HorizontalTextAlignment="Start"
+                                                      Style="{DynamicResource ListItemDetailTextStyle}" FontSize="14"/>
+                                                </Grid>
+                                            </StackLayout>
+
+                                        </StackLayout>
+                                    </StackLayout>
+                                    <BoxView HeightRequest="5" BackgroundColor="#ca223e" HorizontalOptions="FillAndExpand" />
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
